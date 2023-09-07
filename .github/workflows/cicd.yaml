@@ -15,30 +15,16 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: python:3.9-slim-buster
 
     steps:
-      - uses: actions/checkout@v3
-      - name: install system dependencies
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install System Dependencies
         run: |
-          sudo apt update && sudo apt upgrade -y
-          sudo apt install -y make
-
-      - name: Cache Poetry
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pypoetry
-          key: poetry-cache-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.POETRY_VERSION }}
-
-      - name: Cache Packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.local
-          key: poetry-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('**/poetry.lock') }}
-
-      - name: Setup Python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          apt update && apt upgrade -y
+          apt install -y make
 
       - name: Install Poetry
         run: |
