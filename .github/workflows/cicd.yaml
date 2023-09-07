@@ -24,7 +24,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           apt update && apt upgrade -y
-          apt install -y make
+          apt install -y make curl
 
       - name: Install Poetry
         run: |
