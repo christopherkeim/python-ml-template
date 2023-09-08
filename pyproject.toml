@@ -4,10 +4,9 @@ version = "0.1.0"
 description = ""
 authors = ["Christopher Keim"]
 readme = "README.md"
-#packages = [
-#    { include = "src" },
-#    { include = "utils"},
-#]
+packages = [
+   { include = "src" },
+]
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.9.7 || >3.9.7, <3.10"
@@ -22,6 +21,9 @@ boto3 = "^1.24.87"
 
 # Web
 requests = "^2.30.0"
+Flask = "^2.2.2"
+Flask-Cors = "^3.0.10"
+flask-talisman = "^1.0.0"
 streamlit = "^1.24.0"
 
 # Data Science
