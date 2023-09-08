@@ -13,17 +13,19 @@ This is a template repository for Python-based Machine Learning projects.
 
 2. Makefile
 
-3. main.py
+3. Dockerfile
 
 4. src package
 
 5. tests package
 
-6. utils package
+6. main.py
 
-7. setup.sh
+7. pyproject.toml
 
-8. user-story.md Issue Template (for story-driven development)
+8. setup.sh
+
+9. user-story.md Issue Template (for story-driven development)
 
 ## Repository Structure
 
@@ -36,10 +38,9 @@ This is a template repository for Python-based Machine Learning projects.
 ├── src
 │    └── __init__.py
 |── tests
-|     |── __init__.py
-|── utils
 |     └── __init__.py
-├── .gitignore
+|── .gitignore
+├── Dockerfile
 ├── Makefile
 ├── README.md
 ├── main.py
@@ -49,9 +50,7 @@ This is a template repository for Python-based Machine Learning projects.
 
 ## Getting Started
 
-This repository is a GitHub Template that you can use to create a new repository
-for Python-based projects. It comes pre-configured to use Python3.9 with Poetry 1.5.1
-as a package manager.
+This repository is a GitHub Template that you can use to create a new repository for Python-based machine learning projects. It comes pre-configured to use Python3.9 with Poetry 1.5.1 as a package manager.
 
 To get started you can:
 
