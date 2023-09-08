@@ -1,11 +1,11 @@
-[![CI](https://github.com/christopherkeim/python-template/actions/workflows/cicd.yaml/badge.svg)](https://github.com/christopherkeim/python-template/actions/workflows/cicd.yaml)
+[![CI](https://github.com/christopherkeim/python-ml-template/actions/workflows/cicd.yaml/badge.svg)](https://github.com/christopherkeim/python-ml-template/actions/workflows/cicd.yaml)
 ![Python Version](https://img.shields.io/badge/python-3.9-blue.svg)
 ![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)
 ![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)
 
-# Python Template
+# Python Machine Learning Template
 
-This is a template repository for Python-based projects.
+This is a template repository for Python-based Machine Learning projects.
 
 ## Quick Start 🐍 🚀 ✨
 
@@ -104,7 +104,6 @@ numpy = "^1.23.3"
 scikit-learn = "^1.1.2"
 matplotlib = "^3.6.0"
 seaborn = "^0.12.0"
-
 ```
 
 ## Package Installation
