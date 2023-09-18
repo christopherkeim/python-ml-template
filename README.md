@@ -95,7 +95,6 @@ requests = "^2.31.0"
 flask = "^2.3.3"
 flask-cors = "^4.0.0"
 flask-talisman = "^1.1.0"
-streamlit = "^1.26.0"
 
 # Data Science
 jupyter = "^1.0.0"
@@ -106,7 +105,7 @@ matplotlib = "^3.6.0"
 seaborn = "^0.12.0"
 
 # MLOps
-comet-ml = "^3.33.10"
+wandb = "^0.15.10"
 ```
 
 ## Package Installation
@@ -119,7 +118,7 @@ make install
 
 4. This will create a `poetry.lock` file defining exactly what dependencies you're using in development and testing. It's recommended that you check this file into version control so others can recreate this on their machines 💻 and in production 🚀.
 
-## Fire Up Some Code!
+## Fire Up Some Code 🔥
 
 5. You're all set to start developing 🐍 🚀 ✨.
 
