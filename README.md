@@ -69,7 +69,7 @@ git clone https://github.com/christopherkeim/python-template.git
 1. Once you have local copy of this repository in your development environment, navigate into this directory and run the `setup.sh` script:
 
 ```bash
-cd python-template
+cd python-ml-template
 bash setup.sh
 ```
 
