@@ -20,9 +20,9 @@ ruff = "^0.0.285"
 
 # Web
 requests = "^2.31.0"
-flask = "^2.3.3"
-flask-cors = "^4.0.0"
-flask-talisman = "^1.1.0"
+fastapi = "^0.103.1"
+pydantic = "^2.3.0"
+uvicorn = "^0.23.2"
 
 # Data Science
 jupyter = "^1.0.0"
