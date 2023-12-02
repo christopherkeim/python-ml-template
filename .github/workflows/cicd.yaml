@@ -11,7 +11,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: python:3.10-slim-buster
+    container: python:3.10-buster
 
     steps:
       - name: Checkout
@@ -28,7 +28,7 @@ jobs:
           pip install poetry==${{ env.POETRY_VERSION }}
           poetry --version
 
-      - name: Install Packages with Poetry
+      - name: Install Python Dependencies with Poetry
         run: |
           poetry install --no-interaction
 
@@ -37,9 +37,6 @@ jobs:
 
       - name: Test
         run: make test
-
-      - name: Format
-        run: make format
 
       - name: Deploy
         run: make deploy
