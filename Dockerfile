@@ -2,11 +2,10 @@
 
 
 ###############################################################
-# PYTHON-BASE
-# Sets up all our environment variables
+# Set up all our environment variables
 ###############################################################
 
-FROM python:3.10-slim-buster as python-base
+FROM python:3.10-buster
 
 ENV PYTHONUNBUFFERED=1 \
     # prevents python creating .pyc files
@@ -24,22 +23,17 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     # Non-interactive for automation
     POETRY_NO_INTERACTION=1 \
-    # Force Poetry to install at this location
-    POETRY_HOME="/opt/poetry" 
+    # Append project's directory to PYTHONPATH (allows module imports)
+    PYTHONPATH="${PYTHONPATH}:/app/src"
 
 # Prepend Poetry to path
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
-
 ###############################################################
-# BUILDER-BASE
-# Used to Build Dependencies + create our virtual environment
+# Install system dependencies 
 ###############################################################
-FROM python-base as builder-base
 
-# Install system dependencies
 RUN apt-get update && apt-get -y install --no-install-recommends \
-    ffmpeg \ 
     curl \
     make \
     gcc \
@@ -48,26 +42,23 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
 # Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
+# Create a directory /app/
+WORKDIR /app/
+
 # Copy project pyproject.toml and poetry.lock here to ensure they'll be cached.
-COPY . .
+COPY ./pyproject.toml .
 
 # Install runtime dependencies with Poetry - uses $POETRY_VIRTUALENVS_IN_PROJECT and
 # $POETRY_NO_INTERACTION 
-RUN poetry install
-
+RUN poetry install --no-root
 
 ###############################################################
-# DEVELOPMENT
-# Image used during Development and Testing
+# Install application and define entry point 
 ###############################################################
-FROM builder-base as development
 
-#Flask ENVs
+# Project files
+COPY ./src/ src/
 
-WORKDIR /src
+EXPOSE 8000
 
-EXPOSE 5000
-CMD ["poetry", "run", "ml_server.py"]
-
-#Non-root user
-ARG USER="mlspace"
+CMD ["poetry", "run", "python", "-m", "uvicorn", "src.server:app", "--host", "0.0.0.0"]
