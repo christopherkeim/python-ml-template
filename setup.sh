@@ -88,20 +88,19 @@ fi
 # Check if bat is in the apt-cache
 if ( apt-cache show bat > /dev/null )
 then
-  echo "bat is already cached 🟢"
+  echo "batcat is already cached 🟢"
 else
   sudo apt update
 fi
 
 # Ensure bat is installed on the machine
-if ( which bat > /dev/null )
+if ( which batcat > /dev/null )
 then
-  echo "bat is already installed 🟢"
+  echo "batcat is already installed 🟢"
 else
-  echo "Installing bat 🔧"
+  echo "Installing batcat 🔧"
   sudo apt install -y bat
 fi
-
 
 # Check if bat is in the apt-cache
 if ( apt-cache show jq > /dev/null )
@@ -283,5 +282,5 @@ else
   sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   
   # Verify that the Docker Engine installation is successful by running the hello-world image
-  sudo docker run hello-world
+  sudo docker run --rm hello-world
 fi
