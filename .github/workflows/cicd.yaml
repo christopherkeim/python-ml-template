@@ -30,7 +30,7 @@ jobs:
 
       - name: Install Python Dependencies with Poetry
         run: |
-          poetry install --no-interaction
+          poetry install --with dev --no-interaction
 
       - name: Lint
         run: make lint
