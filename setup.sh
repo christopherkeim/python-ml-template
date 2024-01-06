@@ -7,6 +7,7 @@
 #   - Poetry 1.5.1
 #   - Python3.10
 #   - Docker 24.0.6
+#   - Terraform v1.6.6
 #
 # Requirements:
 #   - Ubuntu 20.04/22.04
@@ -102,7 +103,7 @@ else
   sudo apt install -y bat
 fi
 
-# Check if bat is in the apt-cache
+# Check if jq is in the apt-cache
 if ( apt-cache show jq > /dev/null )
 then
   echo "jq is already cached 🟢"
@@ -110,7 +111,7 @@ else
   sudo apt update
 fi
 
-# Ensure bat is installed on the machine
+# Ensure jq is installed on the machine
 if ( which jq > /dev/null )
 then
   echo "jq is already installed 🟢"
@@ -166,7 +167,7 @@ else
   echo "Adding deadsnakes to the apt-repository 💀🐍"
   sudo add-apt-repository -y ppa:deadsnakes/ppa
   # Refresh the package list again
-  sudo apt update
+  sudo apt update -y
 fi
 
 # Now you can download Python3.10
@@ -234,9 +235,9 @@ DISTRO=$(lsb_release -d | awk -F ' ' '{print tolower($2)}')
 # Add Docker’s official GPG key
 if [ -f /etc/apt/keyrings/docker.gpg ]
 then
-  echo 'Docker GPG Key already installed at /etc/apt/keyrings/docker.gpg 🟢'
+  echo "Docker GPG Key already installed at /etc/apt/keyrings/docker.gpg 🟢"
 else
-  echo 'Installing Docker GPG Key at /etc/apt/keyrings/docker.gpg 🔧'
+  echo "Installing Docker GPG Key at /etc/apt/keyrings/docker.gpg 🔧"
   
   # Create the /etc/apt/keyrings directory with appropriate permissions
   sudo install -m 0755 -d /etc/apt/keyrings
@@ -283,4 +284,50 @@ else
   
   # Verify that the Docker Engine installation is successful by running the hello-world image
   sudo docker run --rm hello-world
+fi
+
+
+# -----------------------------------------------------------------------------------------------------------
+# 5) Terraform Install: here we'll install Terraform
+# -----------------------------------------------------------------------------------------------------------
+
+# Add HashiCorp's official GPG key
+if [ -f /usr/share/keyrings/hashicorp-archive-keyring.gpg ]
+then
+  echo "Hashicorp GPG Key already installed at /usr/share/keyrings/hashicorp-archive-keyring.gpg 🟢"
+else
+  echo "Installing Hashicorp GPG key at /usr/share/keyrings/hashicorp-archive-keyring.gpg 🔧"
+  wget -O- https://apt.releases.hashicorp.com/gpg | \
+    gpg --dearmor | \
+    sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+fi
+
+# Add HashiCorp's repository
+if [ -f /etc/apt/sources.list.d/hashicorp.list ]
+then
+  echo "hashicorp.list repository already exists at /etc/apt/sources.list.d/hashicorp.list 🟢"
+else
+  echo "Installing hashicorp.list repository at /etc/apt/sources.list.d/hashicorp.list 🔧"
+  echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+    https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+    sudo tee /etc/apt/sources.list.d/hashicorp.list
+  # Refresh the package list
+  sudo apt update -y
+fi
+
+# Install Terraform
+if ( terraform --version > /dev/null )
+then
+  echo "Terraform is already installed 🟢"
+else
+  echo "Installing Terraform 🌎"
+  sudo apt-get install terraform
+fi
+
+# Verify Terraform installation
+if ( terraform --version > /dev/null )
+then
+  echo "$(terraform --version) 🌎"
+else
+  echo "Terraform was not installed successfully 🔴"
 fi
