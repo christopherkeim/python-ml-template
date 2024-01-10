@@ -185,7 +185,10 @@ fi
 if ( poetry --version > /dev/null ); then
   echo 'Poetry is already in PATH 🟢'
 else
-  echo -e "# Add Poetry (Python Package Manager) to PATH\nexport PATH="/home/$USER/.local/bin:$PATH"" >> ~/.bashrc
+  echo -e \
+    "# Add Poetry (Python Package Manager) to PATH
+    export PATH="/home/${USER}/.local/bin:${PATH}"" \
+    >> ~/.bashrc
   source ~/.bashrc
 fi
 
@@ -220,8 +223,8 @@ else
   sudo install -m 0755 -d /etc/apt/keyrings
   
   # Download the GPG key from Docker
-  curl -fsSL https://download.docker.com/linux/$DISTRO/gpg | \
-    sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  curl -fsSL https://download.docker.com/linux/${DISTRO}/gpg \
+    | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
   sudo chmod a+r /etc/apt/keyrings/docker.gpg
 fi
@@ -232,9 +235,10 @@ if [[ -f /etc/apt/sources.list.d/docker.list ]] ; then
 else
   echo 'Installing docker.list repository at /etc/apt/sources.list.d/docker.list 🔧'
   echo \
-    "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/$DISTRO \
-    "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] \
+    https://download.docker.com/linux/$DISTRO \
+    "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" \
+    | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 fi
 
 # -----------------------------------------------------------------------------------------------------------
@@ -276,9 +280,9 @@ if [[ -f /usr/share/keyrings/hashicorp-archive-keyring.gpg ]]; then
   echo 'Hashicorp GPG Key already installed at /usr/share/keyrings/hashicorp-archive-keyring.gpg 🟢'
 else
   echo 'Installing Hashicorp GPG key at /usr/share/keyrings/hashicorp-archive-keyring.gpg 🔧'
-  wget -O- https://apt.releases.hashicorp.com/gpg | \
-    gpg --dearmor | \
-    sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+  wget -O- https://apt.releases.hashicorp.com/gpg \
+    | gpg --dearmor \
+    | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
 fi
 
 # Add HashiCorp's repository
@@ -287,8 +291,8 @@ if [[ -f /etc/apt/sources.list.d/hashicorp.list ]]; then
 else
   echo 'Installing hashicorp.list repository at /etc/apt/sources.list.d/hashicorp.list 🔧'
   echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
-    https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
-    sudo tee /etc/apt/sources.list.d/hashicorp.list
+    https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
+    | sudo tee /etc/apt/sources.list.d/hashicorp.list
   # Refresh the package list
   sudo apt update -y
 fi
