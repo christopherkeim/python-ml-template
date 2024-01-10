@@ -19,16 +19,14 @@
 # -----------------------------------------------------------------------------------------------------------
 
 # Check if ca-certificates is in the apt-cache
-if ( apt-cache show ca-certificates > /dev/null )
-then
+if ( apt-cache show ca-certificates > /dev/null ); then
   echo 'ca-certificates is already cached 🟢'
 else
   sudo apt update
 fi
 
 # Ensure ca-certificates package is installed on the machine
-if ( which update-ca-certificates > /dev/null )
-then
+if ( which update-ca-certificates > /dev/null ); then
   echo 'ca-certificates is already installed 🟢'
 else
   echo 'Installing ca-certificates 📜'
@@ -36,16 +34,14 @@ else
 fi
 
 # Check if curl is in the apt-cache
-if ( apt-cache show curl > /dev/null )
-then
+if ( apt-cache show curl > /dev/null ); then
   echo 'curl is already cached 🟢'
 else
   sudo apt update
 fi
 
 # Ensure curl is installed on the machine
-if ( which curl > /dev/null )
-then
+if ( which curl > /dev/null ); then
   echo 'curl is already installed 🟢'
 else
   echo 'Installing curl 🌀'
@@ -53,16 +49,14 @@ else
 fi
 
 # Check if make is in the apt-cache
-if ( apt-cache show make > /dev/null )
-then
+if ( apt-cache show make > /dev/null ); then
   echo 'make is already cached 🟢'
 else
   sudo apt update
 fi
 
 # Ensure make is installed on the machine
-if ( which make > /dev/null )
-then
+if ( which make > /dev/null ); then
   echo 'make is already installed 🟢'
 else
   echo 'Installing make 🔧'
@@ -70,16 +64,14 @@ else
 fi
 
 # Check if gnupg is in the apt-cache
-if ( apt-cache show gpg > /dev/null )
-then
+if ( apt-cache show gpg > /dev/null ); then
   echo 'gnupg is already cached 🟢'
 else
   sudo apt update
 fi
 
 # Ensure gnupg is installed on the machine
-if ( which gpg > /dev/null )
-then
+if ( which gpg > /dev/null ); then
   echo 'make is already installed 🟢'
 else
   echo 'Installing gnugp 🔧'
@@ -87,16 +79,14 @@ else
 fi
 
 # Check if bat is in the apt-cache
-if ( apt-cache show bat > /dev/null )
-then
+if ( apt-cache show bat > /dev/null ); then
   echo 'batcat is already cached 🟢'
 else
   sudo apt update
 fi
 
 # Ensure bat is installed on the machine
-if ( which batcat > /dev/null )
-then
+if ( which batcat > /dev/null ); then
   echo 'batcat is already installed 🟢'
 else
   echo 'Installing batcat 🔧'
@@ -104,16 +94,14 @@ else
 fi
 
 # Check if jq is in the apt-cache
-if ( apt-cache show jq > /dev/null )
-then
+if ( apt-cache show jq > /dev/null ); then
   echo 'jq is already cached 🟢'
 else
   sudo apt update
 fi
 
 # Ensure jq is installed on the machine
-if ( which jq > /dev/null )
-then
+if ( which jq > /dev/null ); then
   echo 'jq is already installed 🟢'
 else
   echo 'Installing jq 🔧'
@@ -121,16 +109,14 @@ else
 fi
 
 # Check if csvkit is in the apt-cache
-if ( apt-cache show csvkit > /dev/null )
-then
+if ( apt-cache show csvkit > /dev/null ); then
   echo 'csvkit is already cached 🟢'
 else
   sudo apt update
 fi
 
 # Ensure csvkit is installed on the machine (commands csvlook, csvcut, in2csv, sql2csv)
-if ( which csvlook > /dev/null )
-then
+if ( which csvlook > /dev/null ); then
   echo 'csvkit is already installed 🟢'
 else
   echo 'Installing csvkit 🔧'
@@ -143,16 +129,14 @@ fi
 # -----------------------------------------------------------------------------------------------------------
 
 # Check if software-properties-common is in the apt-cache
-if ( apt-cache show software-properties-common > /dev/null )
-then
+if ( apt-cache show software-properties-common > /dev/null ); then
   echo 'software-properties-common is already cached 🟢'
 else
   sudo apt update
 fi
 
 # Check for the software-properties-common requirement
-if ( dpkg -L software-properties-common > /dev/null )
-then
+if ( dpkg -L software-properties-common > /dev/null ); then
   echo 'software-properties-common requirement met 🟢'
 else
   echo 'Installing software-properties-common 🔧'
@@ -160,8 +144,7 @@ else
 fi
 
 # Add this apt repository for Python 3.10
-if [[ -n "$(ls /etc/apt/sources.list.d | grep deadsnakes)" ]]
-then
+if [[ -n "$(ls /etc/apt/sources.list.d | grep deadsnakes)" ]]; then
   echo 'ppa:deadsnakes/ppa apt repository present 🟢'
 else
   echo 'Adding deadsnakes to the apt-repository 💀🐍'
@@ -171,8 +154,7 @@ else
 fi
 
 # Now you can download Python3.10
-if ( which python3.10 > /dev/null )
-then
+if ( which python3.10 > /dev/null ); then
   echo 'Python3.10 already installed 🐍'
 else
   echo 'Installing Python3.10 🔧'
@@ -180,8 +162,7 @@ else
 fi
 
 # Verify Python3.10 installation
-if ( which python3.10 > /dev/null )
-then
+if ( which python3.10 > /dev/null ); then
   echo "$(python3.10 --version) 🐍 🚀 ✨"
 else
   echo 'Python 3.10 was not installed successfully 🔴'
@@ -193,8 +174,7 @@ fi
 # -----------------------------------------------------------------------------------------------------------
 
 # Install Poetry using the official installer
-if ( which poetry > /dev/null )
-then
+if ( which poetry > /dev/null ); then
   echo 'Poetry is already installed 🟢'
 else
   echo 'Installing Poetry 🧙‍♂️'
@@ -202,8 +182,7 @@ else
 fi
 
 # Add Poetry to the path in the current user's .bashrc
-if ( poetry --version > /dev/null )
-then
+if ( poetry --version > /dev/null ); then
   echo 'Poetry is already in PATH 🟢'
 else
   echo -e "# Add Poetry (Python Package Manager) to PATH\nexport PATH="/home/$USER/.local/bin:$PATH"" >> ~/.bashrc
@@ -211,8 +190,7 @@ else
 fi
 
 # Configure Poetry to put build all virtual environments in the project's directory
-if [[ "$(poetry config virtualenvs.in-project)" == "true" ]]
-then
+if [[ "$(poetry config virtualenvs.in-project)" == "true" ]]; then
   echo 'Poetry already configured to create virtual envs within projects 🟢'
 else
   echo 'Configuring Poetry to create virtual envs in projects 🪐'
@@ -233,8 +211,7 @@ fi
 readonly DISTRO="$(lsb_release -d | awk -F ' ' '{print tolower($2)}')"
 
 # Add Docker’s official GPG key
-if [[ -f /etc/apt/keyrings/docker.gpg ]]
-then
+if [[ -f /etc/apt/keyrings/docker.gpg ]]; then
   echo 'Docker GPG Key already installed at /etc/apt/keyrings/docker.gpg 🟢'
 else
   echo 'Installing Docker GPG Key at /etc/apt/keyrings/docker.gpg 🔧'
@@ -250,8 +227,7 @@ else
 fi
 
 # Set up the repository
-if [[ -f /etc/apt/sources.list.d/docker.list ]] 
-then
+if [[ -f /etc/apt/sources.list.d/docker.list ]] ; then
   echo 'docker.list repository already exists at /etc/apt/sources.list.d/docker.list 🟢'
 else
   echo 'Installing docker.list repository at /etc/apt/sources.list.d/docker.list 🔧'
@@ -266,16 +242,14 @@ fi
 # -----------------------------------------------------------------------------------------------------------
 
 # Check if docker-ce is in the apt-cache
-if ( apt-cache show docker-ce > /dev/null )
-then
+if ( apt-cache show docker-ce > /dev/null ); then
   echo 'docker-ce is already cached 🟢'
 else
   sudo apt update
 fi
 
 # Install Docker Engine, containerd, and Docker Compose
-if ( docker --version > /dev/null )
-then
+if ( docker --version > /dev/null ); then
   echo 'Docker is already installed 🟢'
   echo "Using $(docker --version)"
 else
@@ -298,8 +272,7 @@ fi
 # -----------------------------------------------------------------------------------------------------------
 
 # Add HashiCorp's official GPG key
-if [[ -f /usr/share/keyrings/hashicorp-archive-keyring.gpg ]]
-then
+if [[ -f /usr/share/keyrings/hashicorp-archive-keyring.gpg ]]; then
   echo 'Hashicorp GPG Key already installed at /usr/share/keyrings/hashicorp-archive-keyring.gpg 🟢'
 else
   echo 'Installing Hashicorp GPG key at /usr/share/keyrings/hashicorp-archive-keyring.gpg 🔧'
@@ -309,8 +282,7 @@ else
 fi
 
 # Add HashiCorp's repository
-if [[ -f /etc/apt/sources.list.d/hashicorp.list ]]
-then
+if [[ -f /etc/apt/sources.list.d/hashicorp.list ]]; then
   echo 'hashicorp.list repository already exists at /etc/apt/sources.list.d/hashicorp.list 🟢'
 else
   echo 'Installing hashicorp.list repository at /etc/apt/sources.list.d/hashicorp.list 🔧'
@@ -322,8 +294,7 @@ else
 fi
 
 # Install Terraform
-if ( terraform --version > /dev/null )
-then
+if ( terraform --version > /dev/null ); then
   echo 'Terraform is already installed 🟢'
 else
   echo 'Installing Terraform 🌎'
@@ -331,8 +302,7 @@ else
 fi
 
 # Verify Terraform installation
-if ( terraform --version > /dev/null )
-then
+if ( terraform --version > /dev/null ); then
   echo "$(terraform --version) 🌎"
 else
   echo 'Terraform was not installed successfully 🔴'
