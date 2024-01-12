@@ -1,11 +1,11 @@
 #! /bin/bash
 # 
 # This script sets up a local development environment on an Ubuntu 20.04/22.04 machine
-# to work with Poetry managed Python3.10 projects. 
+# to work with Poetry managed Python3.X projects. 
 # 
 # Targets:
-#   - Poetry 1.5.1
 #   - Python3.10
+#   - Poetry 1.5.1
 #   - Docker 24.0.6
 #   - Terraform v1.6.6
 #
@@ -13,6 +13,73 @@
 #   - Ubuntu 20.04/22.04
 #   - Python3.7+ 
 #
+
+# -----------------------------------------------------------------------------------------------------------
+# 0) Config: here we'll set default variables and handle options for controlling 
+#    the target versions of Python and Poetry installed during set up.
+# -----------------------------------------------------------------------------------------------------------
+package="setup.sh"
+
+TARGET_PYTHON_VERSION="3.10"
+TARGET_POETRY_VERSION="1.5.1"
+
+
+show_help() {
+  cat <<END
+  Sets up Poetry managed Python environment for machine learning 
+  development on Ubuntu 20.04/22.04.
+
+  ${package} [options] [arguments]
+
+  options:
+  -h, --help                Display help message
+  --python=VERSION          Python version to use (default 3.10)
+  --poetry=VERSION          Poetry version to use (default 1.5.1)
+END
+
+  exit 0
+}
+
+while getopts 'h-:' flag; do
+  case "${flag}" in
+    h) show_help ;;
+    -)
+      # Prefix substring removal matching "*="
+      LONG_OPTARG_VALUE="${OPTARG#*=}"
+      case ${OPTARG} in
+        help)
+          show_help
+          ;;
+        python=?*)  
+          TARGET_PYTHON_VERSION="${LONG_OPTARG_VALUE}"
+          ;;
+        poetry=?*) 
+          TARGET_POETRY_VERSION="${LONG_OPTARG_VALUE}"
+          ;;
+        python* | poetry*)
+          echo "No arg for --${OPTARG} option" >&2
+          exit 2
+          ;;
+        help*)
+          echo "No arg allowed for --${OPTARG} option" >&2; 
+          exit 2
+          ;;
+        *)
+          echo "Unknown option --$OPTARG" >&2
+          exit 2 
+          ;;
+      esac 
+      ;;
+    # getopts already reported the unknown option error, so exit
+    \?) exit 2 ;;
+  esac
+done
+shift $((OPTIND-1))
+
+readonly TARGET_PYTHON_VERSION
+readonly TARGET_POETRY_VERSION
+
+
 # -----------------------------------------------------------------------------------------------------------
 # 1) Base Requirements: this will ensure that you base requirements along with some data science
 #    CLI tools installed.
@@ -125,7 +192,7 @@ fi
 
 
 # -----------------------------------------------------------------------------------------------------------
-# 2) Python3.10 Install: here we'll install Python3.10 - feel free to swap this for any version you'd like.
+# 2) Python3.X Install: here we'll install Python3.10 (default) - swap this for a version you'd like.
 # -----------------------------------------------------------------------------------------------------------
 
 # Check if software-properties-common is in the apt-cache
@@ -143,7 +210,7 @@ else
   sudo apt install -y software-properties-common
 fi
 
-# Add this apt repository for Python 3.10
+# Add this apt repository for Python 3.X
 if [[ -n "$(ls /etc/apt/sources.list.d | grep deadsnakes)" ]]; then
   echo 'ppa:deadsnakes/ppa apt repository present 🟢'
 else
@@ -153,19 +220,19 @@ else
   sudo apt update -y
 fi
 
-# Now you can download Python3.10
-if ( which python3.10 > /dev/null ); then
-  echo 'Python3.10 already installed 🐍'
+# Now you can download Python3.X
+if ( which python${TARGET_PYTHON_VERSION} > /dev/null ); then
+  echo "Python${TARGET_PYTHON_VERSION} already installed 🐍"
 else
-  echo 'Installing Python3.10 🔧'
-  sudo apt install -y python3.10
+  echo "Installing Python${TARGET_PYTHON_VERSION} 🔧"
+  sudo apt install -y python${TARGET_PYTHON_VERSION}
 fi
 
-# Verify Python3.10 installation
-if ( which python3.10 > /dev/null ); then
-  echo "$(python3.10 --version) 🐍 🚀 ✨"
+# Verify Python3.X installation
+if ( which python${TARGET_PYTHON_VERSION} > /dev/null ); then
+  echo "$(python${TARGET_PYTHON_VERSION} --version) 🐍 🚀 ✨"
 else
-  echo 'Python 3.10 was not installed successfully 🔴'
+  echo "Python ${TARGET_PYTHON_VERSION} was not installed successfully 🔴"
 fi
 
 
@@ -175,10 +242,11 @@ fi
 
 # Install Poetry using the official installer
 if ( which poetry > /dev/null ); then
-  echo 'Poetry is already installed 🟢'
+  echo "Poetry ${TARGET_POETRY_VERSION} is already installed 🟢"
 else
   echo 'Installing Poetry 🧙‍♂️'
-  curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.5.1 python3 -
+  curl -sSL https://install.python-poetry.org \
+    | POETRY_VERSION=${TARGET_POETRY_VERSION} python3 -
 fi
 
 # Add Poetry to the path in the current user's .bashrc
@@ -230,7 +298,7 @@ else
 fi
 
 # Set up the repository
-if [[ -f /etc/apt/sources.list.d/docker.list ]] ; then
+if [[ -f /etc/apt/sources.list.d/docker.list ]]; then
   echo 'docker.list repository already exists at /etc/apt/sources.list.d/docker.list 🟢'
 else
   echo 'Installing docker.list repository at /etc/apt/sources.list.d/docker.list 🔧'
