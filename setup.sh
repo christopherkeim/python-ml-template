@@ -1,7 +1,7 @@
 #! /bin/bash
 # 
 # This script sets up a local development environment on an Ubuntu 20.04/22.04 machine
-# to work with Poetry managed Python3.10 projects. 
+# to work with Poetry managed Python3.X projects. 
 # 
 # Targets:
 #   - Python3.10
@@ -15,7 +15,7 @@
 #
 
 # -----------------------------------------------------------------------------------------------------------
-# 0) Environment: here we'll set env variables and handle options for controlling 
+# 0) Config: here we'll set default variables and handle options for controlling 
 #    the target versions of Python and Poetry installed during set up.
 # -----------------------------------------------------------------------------------------------------------
 package="setup.sh"
