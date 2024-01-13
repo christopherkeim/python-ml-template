@@ -3,8 +3,7 @@ Server for inference.
 """
 
 from pydantic import BaseModel
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
 import uvicorn
 
 
