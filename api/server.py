@@ -2,9 +2,9 @@
 Server for inference.
 """
 
-from datetime import datetime
 from pydantic import BaseModel
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 
@@ -15,14 +15,13 @@ class PredictionResult(BaseModel):
 
     model: str
     prediction: float
-    request_timestamp: str
 
 
-class FilteredData(BaseModel):
+class ValidatedBodyData(BaseModel):
     """
-    Pydantic will filter out data that doesn't match your
-    model properties AND validate the data types of matching
-    keys.
+    Pydantic will validate your model properties exist as keys,
+    validate their data types, and filter out data that doesn't
+    match your model properties.
     """
 
     x: float
@@ -39,20 +38,13 @@ async def home() -> str:
 
 @app.post("/api/predict")
 async def predict(
-    request: Request,
+    request: ValidatedBodyData,
     model_name: str = "cnn",
 ) -> PredictionResult:
-    # Extract JSON from body
-    body_data: dict[str, str] = await request.json()
-
-    # Filter JSON using a Pydantic model (with validation)
-    filtered_body_data: FilteredData = FilteredData(**body_data)
-
     # FastAPI will handle converting this to JSON via Pydantic
     return PredictionResult(
         model=model_name,
-        prediction=filtered_body_data.y * filtered_body_data.x,
-        request_timestamp=datetime.now().strftime("%Y-%m-%dT%H:%M"),
+        prediction=request.y * request.x,
     )
 
 
