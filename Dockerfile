@@ -58,7 +58,8 @@ RUN poetry install --no-root
 
 # Project files
 COPY ./src/ src/
+COPY ./api/ api/
 
 EXPOSE 8000
 
-CMD ["poetry", "run", "python", "-m", "uvicorn", "src.server:app", "--host", "0.0.0.0"]
+CMD ["poetry", "run", "python", "-m", "uvicorn", "api.server:app", "--host", "0.0.0.0"]
