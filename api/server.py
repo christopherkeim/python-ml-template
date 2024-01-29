@@ -4,7 +4,6 @@ Server for inference.
 
 from pydantic import BaseModel
 from fastapi import FastAPI
-import uvicorn
 
 
 class PredictionResult(BaseModel):
@@ -48,6 +47,8 @@ async def predict(
 
 
 if __name__ == "__main__":
+    import uvicorn
+
     uvicorn.run(
         "api.server:app",
         workers=1,
