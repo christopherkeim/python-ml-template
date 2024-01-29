@@ -4,7 +4,7 @@ from httpx import Response
 from api.server import app
 
 
-client = TestClient(app)
+client: TestClient = TestClient(app)
 
 
 def test_predict() -> None:
