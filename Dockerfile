@@ -56,7 +56,7 @@ RUN poetry install --no-root
 # Install application and define entry point 
 ###############################################################
 
-# Project files
+# Project files (`/app/src/`, `/app/api/`)
 COPY ./src/ src/
 COPY ./api/ api/
 
