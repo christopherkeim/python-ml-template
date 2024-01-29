@@ -6,6 +6,7 @@ authors = ["Christopher Keim"]
 readme = "README.md"
 packages = [
    { include = "src" },
+   { include = "api" },
 ]
 
 [tool.poetry.dependencies]
