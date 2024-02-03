@@ -235,6 +235,22 @@ else
   echo "Python ${TARGET_PYTHON_VERSION} was not installed successfully 🔴"
 fi
 
+# Install pip (deadsnakes Python3.X installations do not come with pip)
+if ( python${TARGET_PYTHON_VERSION} -m pip > /dev/null ); then
+  echo 'pip is already installed 🟢'
+else
+  echo "Installing pip for Python ${TARGET_PYTHON_VERSION} 🔧"
+  sudo apt install python${TARGET_PYTHON_VERSION}-venv
+  python${TARGET_PYTHON_VERSION} -m ensurepip
+fi
+
+# Verify pip installation
+if ( python${TARGET_PYTHON_VERSION} -m pip > /dev/null ); then
+  echo "python${TARGET_PYTHON_VERSION} pip successfully installed installed 🟢"
+else
+  echo "python${TARGET_PYTHON_VERSION} pip was not installed successfully 🔴"
+fi
+
 
 # -----------------------------------------------------------------------------------------------------------
 # 3) Poetry Install: here we'll install and configure Poetry, as well as add Poetry to the PATH.
