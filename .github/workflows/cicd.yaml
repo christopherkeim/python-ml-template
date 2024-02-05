@@ -9,13 +9,13 @@ env:
   POETRY_VIRTUALENVS_IN_PROJECT: true
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
     container: python:3.10-buster
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install System Dependencies
         run: |
