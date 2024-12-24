@@ -22,6 +22,7 @@ A rotating file handler can be added if desired:
 """
 
 from typing import Literal
+from enum import Enum
 from logging import config, getLogger, Logger
 
 STANDARD_FORMATTER: str = (
@@ -95,3 +96,13 @@ def new_logger(
     config.dictConfig(LOGGING_CONFIG)
 
     return getLogger(name)
+
+
+class LogSymbol(str, Enum):
+    SUCCESS: str = "🟢"
+    ERROR: str = "🔴"
+    REQUEST: str = "➡️ 🆕 📬"
+    RESPONSE: str = "🔙 💌"
+
+    def __str__(self) -> str:
+        return self.value
