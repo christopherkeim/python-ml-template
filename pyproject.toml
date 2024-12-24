@@ -14,6 +14,7 @@ python = ">=3.10, <3.11"
 
 # DevOps
 click = "^8.1.8"
+pydantic-settings = "^2.7.0"
 
 # Web
 httpx = "^0.28.1"
