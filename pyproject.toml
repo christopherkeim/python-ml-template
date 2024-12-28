@@ -20,6 +20,7 @@ httpx = "^0.28.1"
 pydantic = "^2.3.0"
 fastapi = "^0.115.6"
 uvicorn = "^0.34.0"
+slowapi = "^0.1.9"
 
 # Data Science
 pandas = "^2.2.3"
@@ -31,7 +32,6 @@ jupyter = "^1.1.1"
 
 # MLOps
 wandb = "^0.15.10"
-slowapi = "^0.1.9"
 
 
 [tool.poetry.group.dev]
