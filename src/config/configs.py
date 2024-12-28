@@ -4,10 +4,10 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Configs(BaseSettings):
-    host: str
-    port: str
-    log_level: str
-    log_format: Literal["standard", "json"]
+    HOST: str
+    PORT: str
+    LOG_LEVEL: str
+    LOG_FORMAT: Literal["standard", "json"] = "json"
 
     model_config = SettingsConfigDict(env_file=".env")
 
