@@ -2,7 +2,7 @@
 /predict
 """
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 
 from src.app.models import Input, Prediction, Predictor
 
