@@ -1,11 +1,14 @@
 from typing import Any, Awaitable, Callable
-from logging import Logger
+import logging
 
 from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.types import ASGIApp
 
-from src.logging.logger import LogSymbol
+from src.logger.logs import LogSymbol
+
+
+logger = logging.getLogger(__name__)
 
 
 class StructuredHTTPRequestLoggingMiddleware(BaseHTTPMiddleware):
@@ -14,11 +17,8 @@ class StructuredHTTPRequestLoggingMiddleware(BaseHTTPMiddleware):
     FastAPI server and all responses it returns.
     """
 
-    def __init__(
-        self, app: ASGIApp, logger: Logger, symbols: LogSymbol = LogSymbol
-    ) -> None:
+    def __init__(self, app: ASGIApp, symbols: LogSymbol = LogSymbol) -> None:
         super().__init__(app)
-        self.__logger = logger
         self.__symbols = symbols
 
     async def dispatch(
@@ -31,7 +31,7 @@ class StructuredHTTPRequestLoggingMiddleware(BaseHTTPMiddleware):
             "headers": dict(request.headers),
             "client": request.client.host,
         }
-        self.__logger.info(f"Received REQUEST {to_log} {self.__symbols.REQUEST}")
+        logger.info(f"Received REQUEST {to_log} {self.__symbols.REQUEST}")
 
         # Extract response body out of body iterator
         response = await call_next(request)
@@ -50,9 +50,11 @@ class StructuredHTTPRequestLoggingMiddleware(BaseHTTPMiddleware):
             if response.status_code == 200
             else self.__symbols.ERROR
         )
-        self.__logger.info(
+
+        logger.info(
             f"Sent RESPONSE {to_log} {self.__symbols.RESPONSE} {response_status_symbol}"
         )
+
         return Response(
             content=response_body,
             status_code=response.status_code,
