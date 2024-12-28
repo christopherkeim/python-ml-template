@@ -5,52 +5,31 @@
 
 # Python Machine Learning Template
 
-This is a template repository for Python-based Machine Learning projects.
+This is a template repository for Python-based Machine Learning web APIs.
+
+This repository is optimized for cloud-native container based deployments.
 
 ## Quick Start 🐍 🚀 ✨
 
-1. Integrated CI pipeline for Python 3.10 and Poetry managed projects (uncomment `make test` when you're ready to have tests in dev or your pipeline)
+```bash
+# Clone repository
+git clone https://github.com/christopherkeim/python-template.git
 
-2. Makefile
+cd python-ml-template
 
-3. Dockerfile
+# Setup system dependencies
+make setup
 
-4. src package
+# Install Python dependencies
+make install
 
-5. tests package
-
-6. main.py
-
-7. pyproject.toml
-
-8. setup.sh
-
-9. user-story.md Issue Template (for story-driven development)
-
-## Repository Structure
-
-```
-├── .github
-│     |── ISSUE_TEMPLATE
-│     |      └── user-story.md
-│     └── workflows
-│            └── cicd.yaml
-├── src
-│    └── __init__.py
-|── tests
-|     └── __init__.py
-|── .gitignore
-├── Dockerfile
-├── Makefile
-├── README.md
-├── main.py
-├── pyproject.toml
-└── setup.sh
+# Run the dev server
+make dev
 ```
 
 ## Getting Started
 
-This repository is a GitHub Template that you can use to create a new repository for Python-based machine learning projects. It comes pre-configured to use Python3.10 with Poetry 1.5.1 as a package manager.
+This repository is a GitHub Template that you can use to create a new repository for Python-based machine learning web APIs. It comes pre-configured to use Python3.10 with Poetry 1.5.1 as a package manager.
 
 To get started you can:
 
@@ -70,7 +49,7 @@ git clone https://github.com/christopherkeim/python-template.git
 
 ```bash
 cd python-ml-template
-bash setup.sh
+make setup
 ```
 
 This will install Poetry 1.5.1 and Python3.10 into your development environment.
@@ -84,25 +63,23 @@ This will install Poetry 1.5.1 and Python3.10 into your development environment.
 python = ">=3.10, <3.11"
 
 # DevOps
-black = "^22.3.0"
-click = "^8.1.3"
-pytest = "^7.4.0"
-pytest-cov = "^4.1.0"
-ruff = "^0.0.285"
+click = "^8.1.8"
+pydantic-settings = "^2.7.0"
 
 # Web
-requests = "^2.31.0"
-fastapi = "^0.103.1"
+httpx = "^0.28.1"
 pydantic = "^2.3.0"
-uvicorn = "^0.23.2"
+fastapi = "^0.115.6"
+uvicorn = "^0.34.0"
+slowapi = "^0.1.9"
 
 # Data Science
-jupyter = "^1.0.0"
-pandas = "^1.5.0"
-numpy = "^1.23.3"
-scikit-learn = "^1.1.2"
-matplotlib = "^3.6.0"
-seaborn = "^0.12.0"
+pandas = "^2.2.3"
+numpy = "^2.2.1"
+scikit-learn = "^1.6.0"
+matplotlib = "^3.10.0"
+seaborn = "^0.13.2"
+jupyter = "^1.1.1"
 
 # MLOps
 wandb = "^0.15.10"
