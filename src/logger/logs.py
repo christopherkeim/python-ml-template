@@ -23,19 +23,19 @@ A rotating file handler can be added if desired:
 
 from typing import Literal
 from enum import Enum
-from logging import config, getLogger, Logger
+from logging import config
 
 STANDARD_FORMATTER: str = (
-    "[%(asctime)s] [%(process)d::%(threadName)s] [%(filename)s::%(lineno)d] [%(name)s] [%(levelname)s] %(message)s"
+    "[%(asctime)s] [%(process)d::%(threadName)s] [%(filename)s::%(lineno)d] [%(name)s] [%(levelname)s] %(message)s"  # noqa E501
 )
 
 JSON_FORMATTER: str = (
-    "{'time': '%(asctime)s', 'process': '%(process)d', 'thread_name': '%(threadName)s', 'thread_id': '%(thread)s', 'level': '%(levelname)s', 'logger_name': '%(name)s', 'message': '%(message)s'}"
+    "{'time': '%(asctime)s', 'process': '%(process)d', 'thread_name': '%(threadName)s', 'thread_id': '%(thread)s', 'level': '%(levelname)s', 'logger_name': '%(name)s', 'message': '%(message)s'}"  # noqa E501
 )
 
 LOGGING_CONFIG = {
     "version": 1,
-    "disable_existing_loggers": True,
+    "disable_existing_loggers": False,
     # Global log formatting.
     "formatters": {
         "global_formatter": {"format": JSON_FORMATTER},
@@ -84,18 +84,15 @@ LOGGING_CONFIG = {
 }
 
 
-def new_logger(
-    name: str, level: str = "INFO", format: Literal["standard", "json"] = "json"
-) -> Logger:
-
+def init_logging(
+    level: str = "INFO", format: Literal["standard", "json"] = "json"
+) -> None:
     LOGGING_CONFIG["loggers"][""]["level"] = level
 
     if format != "json":
         LOGGING_CONFIG["formatters"]["global_formatter"]["format"] = STANDARD_FORMATTER
 
     config.dictConfig(LOGGING_CONFIG)
-
-    return getLogger(name)
 
 
 class LogSymbol(str, Enum):
