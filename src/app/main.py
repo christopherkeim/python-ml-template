@@ -1,5 +1,5 @@
 """
-Server for inference.
+Application entry point.
 """
 
 import logging
@@ -16,10 +16,10 @@ from src.app.models import ModelProvider, ModelName, ModelSchema, Predictor
 from src.app.rate_limiter import limiter
 from src.config.configs import CONFIGS
 from src.logger.logs import init_logging
-from src.predictors.simple_predictor.service import SimplePredictor
 from src.model_providers.simple_model_provider.service import (
     build_simple_model_provider,
 )
+from src.predictors.simple_predictor.service import SimplePredictor
 
 
 init_logging(level=CONFIGS.LOG_LEVEL, format=CONFIGS.LOG_FORMAT)
