@@ -27,7 +27,8 @@ class Predictor(Protocol):
     Predictor interface.
     """
 
-    def predict(self, input: Input) -> Prediction: ...
+    def predict(self, input: Input) -> Prediction:
+        ...
 
 
 class ModelName(str, Enum):
@@ -66,7 +67,9 @@ class ModelProvider(Protocol):
     schema.
     """
 
-    def get(self, model: ModelSchema) -> ModelArtefact: ...
+    def get(self, model: ModelSchema) -> ModelArtefact:
+        ...
+
     def __download_models(self) -> None:
         """
         Downloads a set of model artefacts to disk if they do not exist locally.
@@ -75,4 +78,5 @@ class ModelProvider(Protocol):
         """
         ...
 
-    def list(self) -> list[ModelArtefact]: ...
+    def list(self) -> list[ModelArtefact]:
+        ...

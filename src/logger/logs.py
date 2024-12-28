@@ -25,13 +25,9 @@ from typing import Literal
 from enum import Enum
 from logging import config
 
-STANDARD_FORMATTER: str = (
-    "[%(asctime)s] [%(process)d::%(threadName)s] [%(filename)s::%(lineno)d] [%(name)s] [%(levelname)s] %(message)s"  # noqa E501
-)
+STANDARD_FORMATTER: str = "[%(asctime)s] [%(process)d::%(threadName)s] [%(filename)s::%(lineno)d] [%(name)s] [%(levelname)s] %(message)s"  # noqa E501
 
-JSON_FORMATTER: str = (
-    "{'time': '%(asctime)s', 'process': '%(process)d', 'thread_name': '%(threadName)s', 'thread_id': '%(thread)s', 'level': '%(levelname)s', 'logger_name': '%(name)s', 'message': '%(message)s'}"  # noqa E501
-)
+JSON_FORMATTER: str = "{'time': '%(asctime)s', 'process': '%(process)d', 'thread_name': '%(threadName)s', 'thread_id': '%(thread)s', 'level': '%(levelname)s', 'logger_name': '%(name)s', 'message': '%(message)s'}"  # noqa E501
 
 LOGGING_CONFIG = {
     "version": 1,
