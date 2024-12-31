@@ -15,10 +15,10 @@ lint:
 	poetry run ruff .
 
 dev:
-	poetry run python src/app/main.py
+	poetry run python src/main.py
 
 qa:
-	poetry run python -m uvicorn src.app.main:app --host 0.0.0.0
+	poetry run python -m uvicorn src.main:app --host 0.0.0.0
 
 build:
 	docker build -t python-ml-template:v0 .
