@@ -1,4 +1,4 @@
-from src.app.models import ModelArtefact, ModelName, ModelProvider, ModelSchema
+from src.models import ModelArtefact, ModelName, ModelProvider, ModelSchema
 
 # from src.utils.paths import MODELS_DIR
 

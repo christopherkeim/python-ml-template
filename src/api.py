@@ -6,8 +6,8 @@ Dependencies can be injected and passed down to specific sub-routers.
 
 from fastapi import APIRouter
 
-from src.app.models import Predictor
-from src.app.routes.predict import router as predict_router
+from src.models import Predictor
+from src.routes.predict import router as predict_router
 
 
 def api_router(predictor: Predictor) -> APIRouter:
