@@ -5,7 +5,7 @@ from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.types import ASGIApp
 
-from src.logger.logs import LogSymbol
+from src.common.logs import LogSymbol
 
 
 logger = logging.getLogger(__name__)

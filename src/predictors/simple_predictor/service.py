@@ -1,7 +1,7 @@
 from typing import Callable
 import logging
 
-from src.app.models import (
+from src.models import (
     Input,
     ModelArtefact,
     Prediction,

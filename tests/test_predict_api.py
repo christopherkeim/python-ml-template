@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 from httpx import Response
 
-from src.app.main import app
+from src.main import app
 
 
 client: TestClient = TestClient(app)

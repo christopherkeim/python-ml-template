@@ -4,7 +4,7 @@
 
 from fastapi import APIRouter
 
-from src.app.models import Input, Prediction, Predictor
+from src.models import Input, Prediction, Predictor
 
 
 def router(predictor: Predictor) -> APIRouter:

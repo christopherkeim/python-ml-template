@@ -9,13 +9,13 @@ from fastapi.middleware.gzip import GZipMiddleware
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
-from src.app.api import api_router
-from src.app.exception_handlers import internal_server_error
-from src.app.middleware import StructuredHTTPRequestLoggingMiddleware
-from src.app.models import ModelProvider, ModelName, ModelSchema, Predictor
-from src.app.rate_limiter import limiter
-from src.config.configs import CONFIGS
-from src.logger.logs import init_logging
+from src.api import api_router
+from src.exception_handlers import internal_server_error
+from src.middleware import StructuredHTTPRequestLoggingMiddleware
+from src.models import ModelProvider, ModelName, ModelSchema, Predictor
+from src.rate_limiter import limiter
+from src.common.configs import CONFIGS
+from src.common.logs import init_logging
 from src.model_providers.simple_model_provider.service import (
     build_simple_model_provider,
 )
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(
-        "src.app.main:app",
+        "src.main:app",
         workers=1,
         host=CONFIGS.HOST,
         port=int(CONFIGS.PORT),
