@@ -23,7 +23,7 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     # Non-interactive for automation
     POETRY_NO_INTERACTION=1 \
-    # Append project's directory to PYTHONPATH (allows module imports)
+    # Append project's directory to PYTHONPATH (ensures module imports)
     PYTHONPATH="${PYTHONPATH}:/app/src"
 
 # Prepend Poetry to path
