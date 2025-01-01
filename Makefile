@@ -24,7 +24,7 @@ build:
 	docker build -t python-ml-template:v0 .
 
 run:
-	docker run --env-file .env -it -p 8000:8000 python-ml-template:v0
+	docker run --cap-drop all --env-file .env -it -p 8000:8000 python-ml-template:v0
 
 prod: build run
 
