@@ -1,37 +1,39 @@
 # syntax=docker/dockerfile:1
 
 
-###############################################################
-# Set up all our environment variables
-###############################################################
+################################################################################
+# Base: add non-root user, common environment variables, and system dependencies
+# for runtime
+################################################################################
 
-FROM python:3.10-buster
+FROM python:3.10-buster AS base
 
-ENV PYTHONUNBUFFERED=1 \
-    # prevents python creating .pyc files
-    PYTHONDONTWRITEBYTECODE=1 \
-    \
-    # pip
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+ENV VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH" \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+
+################################################################################
+# Builder: Install build tooling / dependencies and Python dependencies
+################################################################################
+
+FROM base AS builder
+
+ENV PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    \
     # Poetry Version
     POETRY_VERSION=1.5.1 \
     # Set the location that Poetry will install to
     POETRY_HOME="/opt/poetry" \
     # Configure Poetry to create virtual envs in project, '.venv'
     POETRY_VIRTUALENVS_IN_PROJECT=true \
-    # Non-interactive for automation
+    # Non-interactive
     POETRY_NO_INTERACTION=1 \
-    # Append project's directory to PYTHONPATH (ensures module imports)
-    PYTHONPATH="${PYTHONPATH}:/app/src"
-
-# Prepend Poetry to path
-ENV PATH="$POETRY_HOME/bin:$PATH"
-
-###############################################################
-# Install system dependencies 
-###############################################################
+    # Cache directory for installs
+    POETRY_CACHE_DIR=/tmp/poetry_cache 
 
 RUN apt-get update && apt-get -y install --no-install-recommends \
     curl \
@@ -39,26 +41,32 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
     gcc \
     pciutils
 
-# Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
-RUN curl -sSL https://install.python-poetry.org | python3 -
-
-# Create a directory /app/
+# For virutal environment copy
 WORKDIR /app/
 
-# Copy project pyproject.toml and poetry.lock here to ensure they'll be cached.
+# Copy project pyproject.toml
 COPY ./pyproject.toml .
 
-# Install runtime dependencies with Poetry - uses $POETRY_VIRTUALENVS_IN_PROJECT and
-# $POETRY_NO_INTERACTION 
-RUN poetry install --no-root
+# Runtime dependencies 
+RUN pip install poetry && \
+    poetry install --no-root && rm -rf ${POETRY_CACHE_DIR}
+
 
 ###############################################################
-# Install application and define entry point 
+# Prod: install application into production runtime image
 ###############################################################
+
+FROM base AS prod
+
+COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+
+WORKDIR /app/
 
 # Project files (e.g. `/app/src/`, `/app/api/`)
 COPY ./src/ src/
 
 EXPOSE 8000
 
-CMD ["poetry", "run", "python", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0"]
+USER appuser
+
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0"]
