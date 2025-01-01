@@ -95,9 +95,33 @@ make install
 
 4. This will create a `poetry.lock` file defining exactly what dependencies you're using in development and testing. It's recommended that you check this file into version control so others can recreate this on their machines 💻 and in production 🚀.
 
-## Fire Up Some Code 🔥
+## Containerization 🐋
 
-5. You're all set to start developing 🐍 🚀 ✨.
+**Resource**: [OWASP Docker Security](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
+
+By default most systems will run a container as root if a user is not set in the build stage (i.e. with an `USER` directive in the `Dockerfile`) or at runtime (with `--user <username>`).
+
+The Dockerfile included in this repository adds a user `appuser` and switches to that user before running the entry point.
+
+Additionally the Makefile `run` command includes a `--cap-drop all` to drop all Linux kernel capabilities from the container. Required capabilities can be added to this command as needed with `--cap-add <CAPABILITY>`. A list of Linux kernel capabilities and their descriptions for Docker can be found in the [Docker docs](https://docs.docker.com/engine/containers/run/#runtime-privilege-and-linux-capabilities:~:text=Linux%20capability%20options). 
+
+5. To build the container:
+
+```bash
+make build
+```
+
+6. To run the container:
+
+```bash
+make run
+```
+
+7. And to do both sequentially:
+
+```bash
+make prod
+```
 
 ## Continuous Integration
 
