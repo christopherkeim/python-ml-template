@@ -270,8 +270,8 @@ if ( poetry --version > /dev/null ); then
   echo 'Poetry is already in PATH 🟢'
 else
   echo -e \
-    "# Add Poetry (Python Package Manager) to PATH
-    export PATH="/home/${USER}/.local/bin:${PATH}"" \
+    '# Add Poetry (Python Package Manager) to PATH
+    export PATH="/home/${USER}/.local/bin:${PATH}"' \
     >> ~/.bashrc
   source ~/.bashrc
 fi
