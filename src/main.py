@@ -55,16 +55,3 @@ api.add_exception_handler(Exception, internal_server_error)
 api.include_router(api_router(predictor))
 
 app.mount("/api/v1", app=api)
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(
-        "src.main:app",
-        workers=1,
-        host=CONFIGS.HOST,
-        port=int(CONFIGS.PORT),
-        reload=True,
-        log_config=None,
-    )
