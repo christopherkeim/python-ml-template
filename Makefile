@@ -1,5 +1,5 @@
 setup:
-	@if [ ! -f = ".env" ]; then cp .env.example .env; fi
+	@if [ ! -f ".env" ]; then cp .env.container.example .env; fi
 	bash setup.sh
 
 install:
@@ -15,10 +15,10 @@ lint:
 	poetry run ruff .
 
 dev:
-	poetry run python src/main.py
+	poetry run python -m bin.dev
 
 qa:
-	poetry run python -m uvicorn src.main:app --host 0.0.0.0
+	poetry run uvicorn src.main:app --host 0.0.0.0
 
 build:
 	docker build -t python-ml-template:v0 .
