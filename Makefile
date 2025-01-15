@@ -1,5 +1,5 @@
 setup:
-	@if [ ! -f = ".env" ]; then cp .env.example .env; fi
+	@if [ ! -f ".env" ]; then cp .env.example .env; fi
 	bash setup.sh
 
 install:
