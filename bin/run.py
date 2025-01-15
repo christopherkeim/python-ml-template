@@ -7,7 +7,6 @@ import uvicorn
 from src.common.configs import CONFIGS
 
 if __name__ == "__main__":
-    import uvicorn
 
     uvicorn.run(
         "src.main:app",
